@@ -1,0 +1,577 @@
+Grammar
+
+    0 $accept: game $end
+
+    1 game: scene_list
+
+    2 scene_list: scene
+    3           | scene_list scene
+
+    4 scene: DISPLAY STRING ';'
+    5      | CHOICE STRING '{' choice_list '}'
+    6      | IF condition '{' scene_list '}'
+    7      | ELSE '{' scene_list '}'
+    8      | SET IDENTIFIER '=' expression ';'
+    9      | EXIT ';'
+
+   10 choice_list: choice
+   11            | choice_list choice
+   12            | scene_list
+
+   13 choice: STRING '{' scene_list '}'
+
+   14 condition: IDENTIFIER '>' expression
+   15          | IDENTIFIER '<' expression
+
+   16 expression: NUMBER
+   17           | IDENTIFIER
+   18           | expression '+' expression
+   19           | expression '-' expression
+   20           | '(' expression ')'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 20
+')' (41) 20
+'+' (43) 18
+'-' (45) 19
+';' (59) 4 8 9
+'<' (60) 15
+'=' (61) 8
+'>' (62) 14
+'{' (123) 5 6 7 13
+'}' (125) 5 6 7 13
+error (256)
+DISPLAY (258) 4
+CHOICE (259) 5
+IF (260) 6
+ELSE (261) 7
+SET (262) 8
+EXIT (263) 9
+IDENTIFIER (264) 8 14 15 17
+STRING (265) 4 5 13
+NUMBER (266) 16
+
+
+Nonterminals, with rules where they appear
+
+$accept (22)
+    on left: 0
+game (23)
+    on left: 1, on right: 0
+scene_list (24)
+    on left: 2 3, on right: 1 3 6 7 12 13
+scene (25)
+    on left: 4 5 6 7 8 9, on right: 2 3
+choice_list (26)
+    on left: 10 11 12, on right: 5 11
+choice (27)
+    on left: 13, on right: 10 11
+condition (28)
+    on left: 14 15, on right: 6
+expression (29)
+    on left: 16 17 18 19 20, on right: 8 14 15 18 19 20
+
+
+state 0
+
+    0 $accept: . game $end
+
+    DISPLAY  shift, and go to state 1
+    CHOICE   shift, and go to state 2
+    IF       shift, and go to state 3
+    ELSE     shift, and go to state 4
+    SET      shift, and go to state 5
+    EXIT     shift, and go to state 6
+
+    game        go to state 7
+    scene_list  go to state 8
+    scene       go to state 9
+
+
+state 1
+
+    4 scene: DISPLAY . STRING ';'
+
+    STRING  shift, and go to state 10
+
+
+state 2
+
+    5 scene: CHOICE . STRING '{' choice_list '}'
+
+    STRING  shift, and go to state 11
+
+
+state 3
+
+    6 scene: IF . condition '{' scene_list '}'
+
+    IDENTIFIER  shift, and go to state 12
+
+    condition  go to state 13
+
+
+state 4
+
+    7 scene: ELSE . '{' scene_list '}'
+
+    '{'  shift, and go to state 14
+
+
+state 5
+
+    8 scene: SET . IDENTIFIER '=' expression ';'
+
+    IDENTIFIER  shift, and go to state 15
+
+
+state 6
+
+    9 scene: EXIT . ';'
+
+    ';'  shift, and go to state 16
+
+
+state 7
+
+    0 $accept: game . $end
+
+    $end  shift, and go to state 17
+
+
+state 8
+
+    1 game: scene_list .
+    3 scene_list: scene_list . scene
+
+    DISPLAY  shift, and go to state 1
+    CHOICE   shift, and go to state 2
+    IF       shift, and go to state 3
+    ELSE     shift, and go to state 4
+    SET      shift, and go to state 5
+    EXIT     shift, and go to state 6
+
+    $default  reduce using rule 1 (game)
+
+    scene  go to state 18
+
+
+state 9
+
+    2 scene_list: scene .
+
+    $default  reduce using rule 2 (scene_list)
+
+
+state 10
+
+    4 scene: DISPLAY STRING . ';'
+
+    ';'  shift, and go to state 19
+
+
+state 11
+
+    5 scene: CHOICE STRING . '{' choice_list '}'
+
+    '{'  shift, and go to state 20
+
+
+state 12
+
+   14 condition: IDENTIFIER . '>' expression
+   15          | IDENTIFIER . '<' expression
+
+    '>'  shift, and go to state 21
+    '<'  shift, and go to state 22
+
+
+state 13
+
+    6 scene: IF condition . '{' scene_list '}'
+
+    '{'  shift, and go to state 23
+
+
+state 14
+
+    7 scene: ELSE '{' . scene_list '}'
+
+    DISPLAY  shift, and go to state 1
+    CHOICE   shift, and go to state 2
+    IF       shift, and go to state 3
+    ELSE     shift, and go to state 4
+    SET      shift, and go to state 5
+    EXIT     shift, and go to state 6
+
+    scene_list  go to state 24
+    scene       go to state 9
+
+
+state 15
+
+    8 scene: SET IDENTIFIER . '=' expression ';'
+
+    '='  shift, and go to state 25
+
+
+state 16
+
+    9 scene: EXIT ';' .
+
+    $default  reduce using rule 9 (scene)
+
+
+state 17
+
+    0 $accept: game $end .
+
+    $default  accept
+
+
+state 18
+
+    3 scene_list: scene_list scene .
+
+    $default  reduce using rule 3 (scene_list)
+
+
+state 19
+
+    4 scene: DISPLAY STRING ';' .
+
+    $default  reduce using rule 4 (scene)
+
+
+state 20
+
+    5 scene: CHOICE STRING '{' . choice_list '}'
+
+    DISPLAY  shift, and go to state 1
+    CHOICE   shift, and go to state 2
+    IF       shift, and go to state 3
+    ELSE     shift, and go to state 4
+    SET      shift, and go to state 5
+    EXIT     shift, and go to state 6
+    STRING   shift, and go to state 26
+
+    scene_list   go to state 27
+    scene        go to state 9
+    choice_list  go to state 28
+    choice       go to state 29
+
+
+state 21
+
+   14 condition: IDENTIFIER '>' . expression
+
+    IDENTIFIER  shift, and go to state 30
+    NUMBER      shift, and go to state 31
+    '('         shift, and go to state 32
+
+    expression  go to state 33
+
+
+state 22
+
+   15 condition: IDENTIFIER '<' . expression
+
+    IDENTIFIER  shift, and go to state 30
+    NUMBER      shift, and go to state 31
+    '('         shift, and go to state 32
+
+    expression  go to state 34
+
+
+state 23
+
+    6 scene: IF condition '{' . scene_list '}'
+
+    DISPLAY  shift, and go to state 1
+    CHOICE   shift, and go to state 2
+    IF       shift, and go to state 3
+    ELSE     shift, and go to state 4
+    SET      shift, and go to state 5
+    EXIT     shift, and go to state 6
+
+    scene_list  go to state 35
+    scene       go to state 9
+
+
+state 24
+
+    3 scene_list: scene_list . scene
+    7 scene: ELSE '{' scene_list . '}'
+
+    DISPLAY  shift, and go to state 1
+    CHOICE   shift, and go to state 2
+    IF       shift, and go to state 3
+    ELSE     shift, and go to state 4
+    SET      shift, and go to state 5
+    EXIT     shift, and go to state 6
+    '}'      shift, and go to state 36
+
+    scene  go to state 18
+
+
+state 25
+
+    8 scene: SET IDENTIFIER '=' . expression ';'
+
+    IDENTIFIER  shift, and go to state 30
+    NUMBER      shift, and go to state 31
+    '('         shift, and go to state 32
+
+    expression  go to state 37
+
+
+state 26
+
+   13 choice: STRING . '{' scene_list '}'
+
+    '{'  shift, and go to state 38
+
+
+state 27
+
+    3 scene_list: scene_list . scene
+   12 choice_list: scene_list .
+
+    DISPLAY  shift, and go to state 1
+    CHOICE   shift, and go to state 2
+    IF       shift, and go to state 3
+    ELSE     shift, and go to state 4
+    SET      shift, and go to state 5
+    EXIT     shift, and go to state 6
+
+    $default  reduce using rule 12 (choice_list)
+
+    scene  go to state 18
+
+
+state 28
+
+    5 scene: CHOICE STRING '{' choice_list . '}'
+   11 choice_list: choice_list . choice
+
+    STRING  shift, and go to state 26
+    '}'     shift, and go to state 39
+
+    choice  go to state 40
+
+
+state 29
+
+   10 choice_list: choice .
+
+    $default  reduce using rule 10 (choice_list)
+
+
+state 30
+
+   17 expression: IDENTIFIER .
+
+    $default  reduce using rule 17 (expression)
+
+
+state 31
+
+   16 expression: NUMBER .
+
+    $default  reduce using rule 16 (expression)
+
+
+state 32
+
+   20 expression: '(' . expression ')'
+
+    IDENTIFIER  shift, and go to state 30
+    NUMBER      shift, and go to state 31
+    '('         shift, and go to state 32
+
+    expression  go to state 41
+
+
+state 33
+
+   14 condition: IDENTIFIER '>' expression .
+   18 expression: expression . '+' expression
+   19           | expression . '-' expression
+
+    '+'  shift, and go to state 42
+    '-'  shift, and go to state 43
+
+    $default  reduce using rule 14 (condition)
+
+
+state 34
+
+   15 condition: IDENTIFIER '<' expression .
+   18 expression: expression . '+' expression
+   19           | expression . '-' expression
+
+    '+'  shift, and go to state 42
+    '-'  shift, and go to state 43
+
+    $default  reduce using rule 15 (condition)
+
+
+state 35
+
+    3 scene_list: scene_list . scene
+    6 scene: IF condition '{' scene_list . '}'
+
+    DISPLAY  shift, and go to state 1
+    CHOICE   shift, and go to state 2
+    IF       shift, and go to state 3
+    ELSE     shift, and go to state 4
+    SET      shift, and go to state 5
+    EXIT     shift, and go to state 6
+    '}'      shift, and go to state 44
+
+    scene  go to state 18
+
+
+state 36
+
+    7 scene: ELSE '{' scene_list '}' .
+
+    $default  reduce using rule 7 (scene)
+
+
+state 37
+
+    8 scene: SET IDENTIFIER '=' expression . ';'
+   18 expression: expression . '+' expression
+   19           | expression . '-' expression
+
+    '+'  shift, and go to state 42
+    '-'  shift, and go to state 43
+    ';'  shift, and go to state 45
+
+
+state 38
+
+   13 choice: STRING '{' . scene_list '}'
+
+    DISPLAY  shift, and go to state 1
+    CHOICE   shift, and go to state 2
+    IF       shift, and go to state 3
+    ELSE     shift, and go to state 4
+    SET      shift, and go to state 5
+    EXIT     shift, and go to state 6
+
+    scene_list  go to state 46
+    scene       go to state 9
+
+
+state 39
+
+    5 scene: CHOICE STRING '{' choice_list '}' .
+
+    $default  reduce using rule 5 (scene)
+
+
+state 40
+
+   11 choice_list: choice_list choice .
+
+    $default  reduce using rule 11 (choice_list)
+
+
+state 41
+
+   18 expression: expression . '+' expression
+   19           | expression . '-' expression
+   20           | '(' expression . ')'
+
+    '+'  shift, and go to state 42
+    '-'  shift, and go to state 43
+    ')'  shift, and go to state 47
+
+
+state 42
+
+   18 expression: expression '+' . expression
+
+    IDENTIFIER  shift, and go to state 30
+    NUMBER      shift, and go to state 31
+    '('         shift, and go to state 32
+
+    expression  go to state 48
+
+
+state 43
+
+   19 expression: expression '-' . expression
+
+    IDENTIFIER  shift, and go to state 30
+    NUMBER      shift, and go to state 31
+    '('         shift, and go to state 32
+
+    expression  go to state 49
+
+
+state 44
+
+    6 scene: IF condition '{' scene_list '}' .
+
+    $default  reduce using rule 6 (scene)
+
+
+state 45
+
+    8 scene: SET IDENTIFIER '=' expression ';' .
+
+    $default  reduce using rule 8 (scene)
+
+
+state 46
+
+    3 scene_list: scene_list . scene
+   13 choice: STRING '{' scene_list . '}'
+
+    DISPLAY  shift, and go to state 1
+    CHOICE   shift, and go to state 2
+    IF       shift, and go to state 3
+    ELSE     shift, and go to state 4
+    SET      shift, and go to state 5
+    EXIT     shift, and go to state 6
+    '}'      shift, and go to state 50
+
+    scene  go to state 18
+
+
+state 47
+
+   20 expression: '(' expression ')' .
+
+    $default  reduce using rule 20 (expression)
+
+
+state 48
+
+   18 expression: expression . '+' expression
+   18           | expression '+' expression .
+   19           | expression . '-' expression
+
+    $default  reduce using rule 18 (expression)
+
+
+state 49
+
+   18 expression: expression . '+' expression
+   19           | expression . '-' expression
+   19           | expression '-' expression .
+
+    $default  reduce using rule 19 (expression)
+
+
+state 50
+
+   13 choice: STRING '{' scene_list '}' .
+
+    $default  reduce using rule 13 (choice)
