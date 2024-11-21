@@ -1,577 +1,277 @@
 Grammar
 
-    0 $accept: game $end
+    0 $accept: Game $end
 
-    1 game: scene_list
+    1 Game: CH1
 
-    2 scene_list: scene
-    3           | scene_list scene
+    2 $@1: %empty
 
-    4 scene: DISPLAY STRING ';'
-    5      | CHOICE STRING '{' choice_list '}'
-    6      | IF condition '{' scene_list '}'
-    7      | ELSE '{' scene_list '}'
-    8      | SET IDENTIFIER '=' expression ';'
-    9      | EXIT ';'
+    3 CH1: a $@1 CH2
+    4    | b
 
-   10 choice_list: choice
-   11            | choice_list choice
-   12            | scene_list
+    5 $@2: %empty
 
-   13 choice: STRING '{' scene_list '}'
+    6 CH2: c $@2 CH3
+    7    | d
 
-   14 condition: IDENTIFIER '>' expression
-   15          | IDENTIFIER '<' expression
+    8 $@3: %empty
 
-   16 expression: NUMBER
-   17           | IDENTIFIER
-   18           | expression '+' expression
-   19           | expression '-' expression
-   20           | '(' expression ')'
+    9 CH3: e $@3 CH4
+   10    | f
+   11    | g
+   12    | h
+
+   13 $@4: %empty
+
+   14 CH4: i $@4 BONUS
+   15    | j
+
+   16 BONUS: k
+   17      | j
 
 
 Terminals, with rules where they appear
 
-$end (0) 0
-'(' (40) 20
-')' (41) 20
-'+' (43) 18
-'-' (45) 19
-';' (59) 4 8 9
-'<' (60) 15
-'=' (61) 8
-'>' (62) 14
-'{' (123) 5 6 7 13
-'}' (125) 5 6 7 13
-error (256)
-DISPLAY (258) 4
-CHOICE (259) 5
-IF (260) 6
-ELSE (261) 7
-SET (262) 8
-EXIT (263) 9
-IDENTIFIER (264) 8 14 15 17
-STRING (265) 4 5 13
-NUMBER (266) 16
+    $end (0) 0
+    error (256)
+    a (258) 3
+    b (259) 4
+    c (260) 6
+    e (261) 9
+    f (262) 10
+    g (263) 11
+    h (264) 12
+    i (265) 14
+    k (266) 16
+    d <integer> (267) 7
+    j <string> (268) 15 17
 
 
 Nonterminals, with rules where they appear
 
-$accept (22)
-    on left: 0
-game (23)
-    on left: 1, on right: 0
-scene_list (24)
-    on left: 2 3, on right: 1 3 6 7 12 13
-scene (25)
-    on left: 4 5 6 7 8 9, on right: 2 3
-choice_list (26)
-    on left: 10 11 12, on right: 5 11
-choice (27)
-    on left: 13, on right: 10 11
-condition (28)
-    on left: 14 15, on right: 6
-expression (29)
-    on left: 16 17 18 19 20, on right: 8 14 15 18 19 20
+    $accept (14)
+        on left: 0
+    Game (15)
+        on left: 1
+        on right: 0
+    CH1 (16)
+        on left: 3 4
+        on right: 1
+    $@1 (17)
+        on left: 2
+        on right: 3
+    CH2 (18)
+        on left: 6 7
+        on right: 3
+    $@2 (19)
+        on left: 5
+        on right: 6
+    CH3 (20)
+        on left: 9 10 11 12
+        on right: 6
+    $@3 (21)
+        on left: 8
+        on right: 9
+    CH4 (22)
+        on left: 14 15
+        on right: 9
+    $@4 (23)
+        on left: 13
+        on right: 14
+    BONUS (24)
+        on left: 16 17
+        on right: 14
 
 
-state 0
+State 0
 
-    0 $accept: . game $end
+    0 $accept: . Game $end
 
-    DISPLAY  shift, and go to state 1
-    CHOICE   shift, and go to state 2
-    IF       shift, and go to state 3
-    ELSE     shift, and go to state 4
-    SET      shift, and go to state 5
-    EXIT     shift, and go to state 6
+    a  shift, and go to state 1
+    b  shift, and go to state 2
 
-    game        go to state 7
-    scene_list  go to state 8
-    scene       go to state 9
+    Game  go to state 3
+    CH1   go to state 4
 
 
-state 1
+State 1
 
-    4 scene: DISPLAY . STRING ';'
+    3 CH1: a . $@1 CH2
 
-    STRING  shift, and go to state 10
+    $default  reduce using rule 2 ($@1)
 
+    $@1  go to state 5
 
-state 2
 
-    5 scene: CHOICE . STRING '{' choice_list '}'
+State 2
 
-    STRING  shift, and go to state 11
+    4 CH1: b .
 
+    $default  reduce using rule 4 (CH1)
 
-state 3
 
-    6 scene: IF . condition '{' scene_list '}'
+State 3
 
-    IDENTIFIER  shift, and go to state 12
+    0 $accept: Game . $end
 
-    condition  go to state 13
+    $end  shift, and go to state 6
 
 
-state 4
+State 4
 
-    7 scene: ELSE . '{' scene_list '}'
+    1 Game: CH1 .
 
-    '{'  shift, and go to state 14
+    $default  reduce using rule 1 (Game)
 
 
-state 5
+State 5
 
-    8 scene: SET . IDENTIFIER '=' expression ';'
+    3 CH1: a $@1 . CH2
 
-    IDENTIFIER  shift, and go to state 15
+    c  shift, and go to state 7
+    d  shift, and go to state 8
 
+    CH2  go to state 9
 
-state 6
 
-    9 scene: EXIT . ';'
+State 6
 
-    ';'  shift, and go to state 16
-
-
-state 7
-
-    0 $accept: game . $end
-
-    $end  shift, and go to state 17
-
-
-state 8
-
-    1 game: scene_list .
-    3 scene_list: scene_list . scene
-
-    DISPLAY  shift, and go to state 1
-    CHOICE   shift, and go to state 2
-    IF       shift, and go to state 3
-    ELSE     shift, and go to state 4
-    SET      shift, and go to state 5
-    EXIT     shift, and go to state 6
-
-    $default  reduce using rule 1 (game)
-
-    scene  go to state 18
-
-
-state 9
-
-    2 scene_list: scene .
-
-    $default  reduce using rule 2 (scene_list)
-
-
-state 10
-
-    4 scene: DISPLAY STRING . ';'
-
-    ';'  shift, and go to state 19
-
-
-state 11
-
-    5 scene: CHOICE STRING . '{' choice_list '}'
-
-    '{'  shift, and go to state 20
-
-
-state 12
-
-   14 condition: IDENTIFIER . '>' expression
-   15          | IDENTIFIER . '<' expression
-
-    '>'  shift, and go to state 21
-    '<'  shift, and go to state 22
-
-
-state 13
-
-    6 scene: IF condition . '{' scene_list '}'
-
-    '{'  shift, and go to state 23
-
-
-state 14
-
-    7 scene: ELSE '{' . scene_list '}'
-
-    DISPLAY  shift, and go to state 1
-    CHOICE   shift, and go to state 2
-    IF       shift, and go to state 3
-    ELSE     shift, and go to state 4
-    SET      shift, and go to state 5
-    EXIT     shift, and go to state 6
-
-    scene_list  go to state 24
-    scene       go to state 9
-
-
-state 15
-
-    8 scene: SET IDENTIFIER . '=' expression ';'
-
-    '='  shift, and go to state 25
-
-
-state 16
-
-    9 scene: EXIT ';' .
-
-    $default  reduce using rule 9 (scene)
-
-
-state 17
-
-    0 $accept: game $end .
+    0 $accept: Game $end .
 
     $default  accept
 
 
-state 18
+State 7
 
-    3 scene_list: scene_list scene .
+    6 CH2: c . $@2 CH3
 
-    $default  reduce using rule 3 (scene_list)
+    $default  reduce using rule 5 ($@2)
 
+    $@2  go to state 10
 
-state 19
 
-    4 scene: DISPLAY STRING ';' .
+State 8
 
-    $default  reduce using rule 4 (scene)
+    7 CH2: d .
 
+    $default  reduce using rule 7 (CH2)
 
-state 20
 
-    5 scene: CHOICE STRING '{' . choice_list '}'
+State 9
 
-    DISPLAY  shift, and go to state 1
-    CHOICE   shift, and go to state 2
-    IF       shift, and go to state 3
-    ELSE     shift, and go to state 4
-    SET      shift, and go to state 5
-    EXIT     shift, and go to state 6
-    STRING   shift, and go to state 26
+    3 CH1: a $@1 CH2 .
 
-    scene_list   go to state 27
-    scene        go to state 9
-    choice_list  go to state 28
-    choice       go to state 29
+    $default  reduce using rule 3 (CH1)
 
 
-state 21
+State 10
 
-   14 condition: IDENTIFIER '>' . expression
+    6 CH2: c $@2 . CH3
 
-    IDENTIFIER  shift, and go to state 30
-    NUMBER      shift, and go to state 31
-    '('         shift, and go to state 32
+    e  shift, and go to state 11
+    f  shift, and go to state 12
+    g  shift, and go to state 13
+    h  shift, and go to state 14
 
-    expression  go to state 33
+    CH3  go to state 15
 
 
-state 22
+State 11
 
-   15 condition: IDENTIFIER '<' . expression
+    9 CH3: e . $@3 CH4
 
-    IDENTIFIER  shift, and go to state 30
-    NUMBER      shift, and go to state 31
-    '('         shift, and go to state 32
+    $default  reduce using rule 8 ($@3)
 
-    expression  go to state 34
+    $@3  go to state 16
 
 
-state 23
+State 12
 
-    6 scene: IF condition '{' . scene_list '}'
+   10 CH3: f .
 
-    DISPLAY  shift, and go to state 1
-    CHOICE   shift, and go to state 2
-    IF       shift, and go to state 3
-    ELSE     shift, and go to state 4
-    SET      shift, and go to state 5
-    EXIT     shift, and go to state 6
+    $default  reduce using rule 10 (CH3)
 
-    scene_list  go to state 35
-    scene       go to state 9
 
+State 13
 
-state 24
+   11 CH3: g .
 
-    3 scene_list: scene_list . scene
-    7 scene: ELSE '{' scene_list . '}'
+    $default  reduce using rule 11 (CH3)
 
-    DISPLAY  shift, and go to state 1
-    CHOICE   shift, and go to state 2
-    IF       shift, and go to state 3
-    ELSE     shift, and go to state 4
-    SET      shift, and go to state 5
-    EXIT     shift, and go to state 6
-    '}'      shift, and go to state 36
 
-    scene  go to state 18
+State 14
 
+   12 CH3: h .
 
-state 25
+    $default  reduce using rule 12 (CH3)
 
-    8 scene: SET IDENTIFIER '=' . expression ';'
 
-    IDENTIFIER  shift, and go to state 30
-    NUMBER      shift, and go to state 31
-    '('         shift, and go to state 32
+State 15
 
-    expression  go to state 37
+    6 CH2: c $@2 CH3 .
 
+    $default  reduce using rule 6 (CH2)
 
-state 26
 
-   13 choice: STRING . '{' scene_list '}'
+State 16
 
-    '{'  shift, and go to state 38
+    9 CH3: e $@3 . CH4
 
+    i  shift, and go to state 17
+    j  shift, and go to state 18
 
-state 27
+    CH4  go to state 19
 
-    3 scene_list: scene_list . scene
-   12 choice_list: scene_list .
 
-    DISPLAY  shift, and go to state 1
-    CHOICE   shift, and go to state 2
-    IF       shift, and go to state 3
-    ELSE     shift, and go to state 4
-    SET      shift, and go to state 5
-    EXIT     shift, and go to state 6
+State 17
 
-    $default  reduce using rule 12 (choice_list)
+   14 CH4: i . $@4 BONUS
 
-    scene  go to state 18
+    $default  reduce using rule 13 ($@4)
 
+    $@4  go to state 20
 
-state 28
 
-    5 scene: CHOICE STRING '{' choice_list . '}'
-   11 choice_list: choice_list . choice
+State 18
 
-    STRING  shift, and go to state 26
-    '}'     shift, and go to state 39
+   15 CH4: j .
 
-    choice  go to state 40
+    $default  reduce using rule 15 (CH4)
 
 
-state 29
+State 19
 
-   10 choice_list: choice .
+    9 CH3: e $@3 CH4 .
 
-    $default  reduce using rule 10 (choice_list)
+    $default  reduce using rule 9 (CH3)
 
 
-state 30
+State 20
 
-   17 expression: IDENTIFIER .
+   14 CH4: i $@4 . BONUS
 
-    $default  reduce using rule 17 (expression)
+    k  shift, and go to state 21
+    j  shift, and go to state 22
 
+    BONUS  go to state 23
 
-state 31
 
-   16 expression: NUMBER .
+State 21
 
-    $default  reduce using rule 16 (expression)
+   16 BONUS: k .
 
+    $default  reduce using rule 16 (BONUS)
 
-state 32
 
-   20 expression: '(' . expression ')'
+State 22
 
-    IDENTIFIER  shift, and go to state 30
-    NUMBER      shift, and go to state 31
-    '('         shift, and go to state 32
+   17 BONUS: j .
 
-    expression  go to state 41
+    $default  reduce using rule 17 (BONUS)
 
 
-state 33
+State 23
 
-   14 condition: IDENTIFIER '>' expression .
-   18 expression: expression . '+' expression
-   19           | expression . '-' expression
+   14 CH4: i $@4 BONUS .
 
-    '+'  shift, and go to state 42
-    '-'  shift, and go to state 43
-
-    $default  reduce using rule 14 (condition)
-
-
-state 34
-
-   15 condition: IDENTIFIER '<' expression .
-   18 expression: expression . '+' expression
-   19           | expression . '-' expression
-
-    '+'  shift, and go to state 42
-    '-'  shift, and go to state 43
-
-    $default  reduce using rule 15 (condition)
-
-
-state 35
-
-    3 scene_list: scene_list . scene
-    6 scene: IF condition '{' scene_list . '}'
-
-    DISPLAY  shift, and go to state 1
-    CHOICE   shift, and go to state 2
-    IF       shift, and go to state 3
-    ELSE     shift, and go to state 4
-    SET      shift, and go to state 5
-    EXIT     shift, and go to state 6
-    '}'      shift, and go to state 44
-
-    scene  go to state 18
-
-
-state 36
-
-    7 scene: ELSE '{' scene_list '}' .
-
-    $default  reduce using rule 7 (scene)
-
-
-state 37
-
-    8 scene: SET IDENTIFIER '=' expression . ';'
-   18 expression: expression . '+' expression
-   19           | expression . '-' expression
-
-    '+'  shift, and go to state 42
-    '-'  shift, and go to state 43
-    ';'  shift, and go to state 45
-
-
-state 38
-
-   13 choice: STRING '{' . scene_list '}'
-
-    DISPLAY  shift, and go to state 1
-    CHOICE   shift, and go to state 2
-    IF       shift, and go to state 3
-    ELSE     shift, and go to state 4
-    SET      shift, and go to state 5
-    EXIT     shift, and go to state 6
-
-    scene_list  go to state 46
-    scene       go to state 9
-
-
-state 39
-
-    5 scene: CHOICE STRING '{' choice_list '}' .
-
-    $default  reduce using rule 5 (scene)
-
-
-state 40
-
-   11 choice_list: choice_list choice .
-
-    $default  reduce using rule 11 (choice_list)
-
-
-state 41
-
-   18 expression: expression . '+' expression
-   19           | expression . '-' expression
-   20           | '(' expression . ')'
-
-    '+'  shift, and go to state 42
-    '-'  shift, and go to state 43
-    ')'  shift, and go to state 47
-
-
-state 42
-
-   18 expression: expression '+' . expression
-
-    IDENTIFIER  shift, and go to state 30
-    NUMBER      shift, and go to state 31
-    '('         shift, and go to state 32
-
-    expression  go to state 48
-
-
-state 43
-
-   19 expression: expression '-' . expression
-
-    IDENTIFIER  shift, and go to state 30
-    NUMBER      shift, and go to state 31
-    '('         shift, and go to state 32
-
-    expression  go to state 49
-
-
-state 44
-
-    6 scene: IF condition '{' scene_list '}' .
-
-    $default  reduce using rule 6 (scene)
-
-
-state 45
-
-    8 scene: SET IDENTIFIER '=' expression ';' .
-
-    $default  reduce using rule 8 (scene)
-
-
-state 46
-
-    3 scene_list: scene_list . scene
-   13 choice: STRING '{' scene_list . '}'
-
-    DISPLAY  shift, and go to state 1
-    CHOICE   shift, and go to state 2
-    IF       shift, and go to state 3
-    ELSE     shift, and go to state 4
-    SET      shift, and go to state 5
-    EXIT     shift, and go to state 6
-    '}'      shift, and go to state 50
-
-    scene  go to state 18
-
-
-state 47
-
-   20 expression: '(' expression ')' .
-
-    $default  reduce using rule 20 (expression)
-
-
-state 48
-
-   18 expression: expression . '+' expression
-   18           | expression '+' expression .
-   19           | expression . '-' expression
-
-    $default  reduce using rule 18 (expression)
-
-
-state 49
-
-   18 expression: expression . '+' expression
-   19           | expression . '-' expression
-   19           | expression '-' expression .
-
-    $default  reduce using rule 19 (expression)
-
-
-state 50
-
-   13 choice: STRING '{' scene_list '}' .
-
-    $default  reduce using rule 13 (choice)
+    $default  reduce using rule 14 (CH4)
