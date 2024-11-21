@@ -69,6 +69,11 @@ Before you start, make sure you have the following installed:
    ```bash
    ./game
    ```
+5. **Input from a file**:
+   If you want to play using a pre-defined input, you can redirect a file using:
+   ```bash
+   ./game < input1.txt
+   ```
 
 ## **Gameplay**
 The game presents a series of challenges, each with different scenarios. Here are some of the challenges you’ll encounter:
