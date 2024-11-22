@@ -11,8 +11,6 @@
   - [What Happens on Wrong Answers](#what-happens-on-wrong-answers)
 - [Understanding the Code](#understanding-the-code)
 - [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## **Overview**
 Welcome to **Escape Room: DO or DIE**, a text-based adventure game where your choices determine the outcome. This project is built using **Lex and Yacc (Bison)** to demonstrate the use of lexical analysis and parsing. The game challenges the player with various scenarios where they must make quick decisions to survive.
