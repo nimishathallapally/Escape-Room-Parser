@@ -34,8 +34,8 @@
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
-#ifndef YY_YY_GAME_TAB_H_INCLUDED
-# define YY_YY_GAME_TAB_H_INCLUDED
+#ifndef YY_YY_BUILD_GAME_TAB_H_INCLUDED
+# define YY_YY_BUILD_GAME_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -67,12 +67,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "game.y"
+#line 26 "src/game.y"
 
     char *string;  // For RANDOM_STRING
     int *integer; // FOR RANDOM_NUMBER
 
-#line 76 "game.tab.h"
+#line 76 "build/game.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -85,4 +85,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_GAME_TAB_H_INCLUDED  */
+#endif /* !YY_YY_BUILD_GAME_TAB_H_INCLUDED  */

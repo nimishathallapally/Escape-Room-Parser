@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "game.y"
+#line 1 "src/game.y"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -91,7 +91,7 @@ void failBonus();
 void yyerror(const char *s);
 int yylex();
 
-#line 95 "game.tab.c"
+#line 95 "build/game.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -124,8 +124,8 @@ int yylex();
 
 /* Use api.header.include to #include this header
    instead of duplicating it here.  */
-#ifndef YY_YY_GAME_TAB_H_INCLUDED
-# define YY_YY_GAME_TAB_H_INCLUDED
+#ifndef YY_YY_BUILD_GAME_TAB_H_INCLUDED
+# define YY_YY_BUILD_GAME_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -157,12 +157,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "game.y"
+#line 26 "src/game.y"
 
     char *string;  // For RANDOM_STRING
     int *integer; // FOR RANDOM_NUMBER
 
-#line 166 "game.tab.c"
+#line 166 "build/game.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -175,7 +175,7 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_GAME_TAB_H_INCLUDED  */
+#endif /* !YY_YY_BUILD_GAME_TAB_H_INCLUDED  */
 
 
 
@@ -1338,79 +1338,79 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 38 "game.y"
+#line 38 "src/game.y"
            { checkGameStatus(); }
-#line 1344 "game.tab.c"
+#line 1344 "build/game.tab.c"
     break;
 
   case 3:
-#line 39 "game.y"
+#line 39 "src/game.y"
         { challengeTwo(); }
-#line 1350 "game.tab.c"
+#line 1350 "build/game.tab.c"
     break;
 
   case 5:
-#line 39 "game.y"
+#line 39 "src/game.y"
                                     { failC1(); }
-#line 1356 "game.tab.c"
+#line 1356 "build/game.tab.c"
     break;
 
   case 6:
-#line 40 "game.y"
+#line 40 "src/game.y"
         { challengeThree(); }
-#line 1362 "game.tab.c"
+#line 1362 "build/game.tab.c"
     break;
 
   case 8:
-#line 40 "game.y"
+#line 40 "src/game.y"
                                       { failC2(); }
-#line 1368 "game.tab.c"
+#line 1368 "build/game.tab.c"
     break;
 
   case 9:
-#line 41 "game.y"
+#line 41 "src/game.y"
         { challengeFour(); }
-#line 1374 "game.tab.c"
+#line 1374 "build/game.tab.c"
     break;
 
   case 11:
-#line 41 "game.y"
+#line 41 "src/game.y"
                                      { failC32(); }
-#line 1380 "game.tab.c"
+#line 1380 "build/game.tab.c"
     break;
 
   case 12:
-#line 41 "game.y"
+#line 41 "src/game.y"
                                                         { failC33(); }
-#line 1386 "game.tab.c"
+#line 1386 "build/game.tab.c"
     break;
 
   case 13:
-#line 41 "game.y"
+#line 41 "src/game.y"
                                                                            { failC34(); }
-#line 1392 "game.tab.c"
+#line 1392 "build/game.tab.c"
     break;
 
   case 14:
-#line 42 "game.y"
+#line 42 "src/game.y"
         { bonusChallenge(); }
-#line 1398 "game.tab.c"
+#line 1398 "build/game.tab.c"
     break;
 
   case 16:
-#line 42 "game.y"
+#line 42 "src/game.y"
                                         { failC4(); }
-#line 1404 "game.tab.c"
+#line 1404 "build/game.tab.c"
     break;
 
   case 18:
-#line 43 "game.y"
+#line 43 "src/game.y"
               { failBonus(); }
-#line 1410 "game.tab.c"
+#line 1410 "build/game.tab.c"
     break;
 
 
-#line 1414 "game.tab.c"
+#line 1414 "build/game.tab.c"
 
       default: break;
     }
@@ -1642,7 +1642,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 45 "game.y"
+#line 45 "src/game.y"
 
 
 void checkGameStatus()

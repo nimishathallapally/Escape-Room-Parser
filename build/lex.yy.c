@@ -1,5 +1,6 @@
+#line 2 "build/lex.yy.c"
 
-#line 3 "lex.yy.c"
+#line 4 "build/lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -466,12 +467,12 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "game.l"
-#line 2 "game.l"
+#line 1 "src/game.l"
+#line 2 "src/game.l"
 #include "game.tab.h"
 #include <string.h>
-#line 474 "lex.yy.c"
-#line 475 "lex.yy.c"
+#line 475 "build/lex.yy.c"
+#line 476 "build/lex.yy.c"
 
 #define INITIAL 0
 
@@ -688,10 +689,10 @@ YY_DECL
 		}
 
 	{
-#line 8 "game.l"
+#line 8 "src/game.l"
 
 
-#line 695 "lex.yy.c"
+#line 696 "build/lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -750,71 +751,71 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 10 "game.l"
+#line 10 "src/game.l"
 { return a; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 11 "game.l"
+#line 11 "src/game.l"
 { return b; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 12 "game.l"
+#line 12 "src/game.l"
 { return c; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 13 "game.l"
+#line 13 "src/game.l"
 { return e; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 14 "game.l"
+#line 14 "src/game.l"
 { return f; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 15 "game.l"
+#line 15 "src/game.l"
 { return g; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 16 "game.l"
+#line 16 "src/game.l"
 { return h; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 17 "game.l"
+#line 17 "src/game.l"
 { return i; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 18 "game.l"
+#line 18 "src/game.l"
 { return k; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 19 "game.l"
+#line 19 "src/game.l"
 { yylval.string = strdup(yytext); return d; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 20 "game.l"
+#line 20 "src/game.l"
 { yylval.string = strdup(yytext); return j; }
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 21 "game.l"
+#line 21 "src/game.l"
 { /* Ignore whitespace */ }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 23 "game.l"
+#line 23 "src/game.l"
 ECHO;
 	YY_BREAK
-#line 818 "lex.yy.c"
+#line 819 "build/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1819,7 +1820,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 23 "game.l"
+#line 23 "src/game.l"
 
 
 
