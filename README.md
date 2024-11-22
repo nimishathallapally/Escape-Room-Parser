@@ -1,4 +1,4 @@
-# **Escape Room: DO or DIE**
+# **Escape Room Simulation : DO or DIE**
 
 ## **Table of Contents**
 - [Overview](#overview)
